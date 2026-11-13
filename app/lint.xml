@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- v1 deliberately targets API 35 and is distributed as an APK, not on
+         Google Play. This advisory depends on the latest SDK present on the
+         build host; a newer installed SDK must not change a pinned build's
+         result. All correctness, security and compatibility checks stay on. -->
+    <issue id="OldTargetApi">
+        <ignore path="build.gradle.kts" />
+    </issue>
+</lint>

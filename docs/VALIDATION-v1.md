@@ -18,6 +18,8 @@ Zéro échec et zéro erreur. Les tests Android utilisent Robolectric 4.14.1 ave
 
 L’analyse Android Lint renvoie **No issues found** en debug et en release, avec les avertissements traités comme erreurs. Le build release est optimisé avec R8 et la réduction des ressources.
 
+La cible API 35 est volontaire pour cette v1 distribuée directement en APK. Le conseil `OldTargetApi` est exclu uniquement sur cette déclaration : il varie selon les SDK installés sur la machine de compilation. Les autres contrôles restent actifs.
+
 Le service est vérifié pour le rejet d’un appel correspondant, les appels autorisés, les exceptions, les contacts, la pause, les numéros indisponibles, l’exclusion des appels sortants et les erreurs du fournisseur de contacts. Une vérification trop lente déclenche une autorisation de secours après 3 secondes ; une réponse tardive ne rejette pas l’appel ensuite.
 
 ## APK distribué
