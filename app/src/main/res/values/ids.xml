@@ -1,0 +1,11 @@
+<resources>
+    <item name="tab_rules" type="id" />
+    <item name="tab_history" type="id" />
+    <item name="tab_allowed" type="id" />
+    <item name="add_entry" type="id" />
+    <item name="number_input" type="id" />
+    <item name="filter_switch" type="id" />
+    <item name="settings_button" type="id" />
+    <item name="content_scroll" type="id" />
+    <item name="rule_list" type="id" />
+</resources>
