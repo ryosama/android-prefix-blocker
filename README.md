@@ -84,6 +84,8 @@ Sur les appareils équipés de DuraSpeed, dont le CUBOT P60 sous Android 12, ouv
 
 Lors du diagnostic sur le téléphone de test, Android a laissé passer un appel après expiration du délai de filtrage, sans connexion au service de l’application. Le service répondait normalement lors des essais suivants, y compris après arrêt de son processus. DuraSpeed était activé et l’exception de prefix blocker était désactivée ; elle a été ajoutée. Ce constat justifie de vérifier ce réglage, sans attribuer tous les délais de filtrage à DuraSpeed.
 
+Après activation de cette exception, un essai avec plus de six minutes d’écran éteint et le processus arrêté a confirmé le redémarrage du service et sa réponse en environ 0,3 seconde. Cet essai utilisait un contact et l’USB restait branché ; le rejet d’un numéro hors contacts et la longue veille sur batterie restent à vérifier. Voir le [compte rendu](docs/VALIDATION-v1.md).
+
 Pour tester un rejet réel, utiliser un numéro absent des contacts et des exceptions, avec une règle correspondant à ce numéro. Un contact doit continuer à sonner, même s’il correspond à une règle de blocage.
 
 ## Confidentialité

@@ -34,8 +34,18 @@ Le service est vérifié pour le rejet d’un appel correspondant, les appels au
 - Vérification des fichiers suivis et du contenu de l’APK contre les identifiants privés locaux, sans détection.
 - La somme de contrôle de l’APK figure dans le fichier `SHA256SUMS` joint à la version GitHub.
 
-## Essais réels à effectuer
+## Essais réels sur CUBOT P60 / Android 12
 
-L’installation et les appels réels sur le CUBOT P60 sous Android 12 restent à effectuer avec le propriétaire du téléphone. Le comportement du modem, de l’opérateur, des SIM et des personnalisations constructeur n’est pas reproduit par Robolectric.
+L’installation et l’interface ont été vérifiées sur le téléphone. Le rôle de filtrage et les autorisations de lecture des contacts et du journal ont été confirmés par USB.
 
-Suivre le [protocole d’essai](TEST-SMARTPHONE.md), notamment le blocage d’un numéro contrôlé, l’exemption des contacts, la désactivation, le redémarrage et l’affichage du journal complet.
+Un appel indésirable a été laissé passer après expiration du délai Android de filtrage, sans connexion au service. DuraSpeed était activé sans exception pour prefix blocker ; l’autorisation d’arrière-plan propre à DuraSpeed a été activée, puis relue pour vérifier son application. Cette configuration est une cause possible du délai initial, sans preuve qu’elle en était l’unique cause.
+
+Trois appels contrôlés depuis un numéro conservé dans les contacts ont permis de vérifier :
+
+- la connexion et la réponse du service avec l’application ouverte ;
+- le redémarrage du service après arrêt normal de son processus, sans arrêt forcé ;
+- après activation de l’exception DuraSpeed, le redémarrage et la réponse après plus de six minutes d’écran éteint, avec le processus de l’application arrêté avant la veille. La réponse a été reçue environ 310 ms après le début du filtrage, sans dépassement de délai.
+
+Le dernier essai a été réalisé avec l’USB branché. Il ne reproduit pas toutes les conditions d’une longue veille sur batterie. Les appels de test ont été autorisés normalement ; aucun contact n’a été supprimé et aucun numéro personnel n’est publié dans ce compte rendu.
+
+Le rejet réel d’un numéro correspondant à une règle et absent des contacts et exceptions reste à vérifier. Les essais après redémarrage du téléphone, sur chaque SIM utilisée et en longue veille sur batterie restent également à effectuer selon le [protocole d’essai](TEST-SMARTPHONE.md).
