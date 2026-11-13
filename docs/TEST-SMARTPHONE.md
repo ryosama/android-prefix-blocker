@@ -8,6 +8,7 @@ Appareil prévu : CUBOT P60. Les vérifications ci-dessous restent à réaliser 
 2. Dans prefix blocker, sélectionner l’application comme service de filtrage et vérifier **Filtrage actif**.
 3. Accorder la lecture du journal d’appels et vérifier la présence des appels antérieurs à l’installation.
 4. Accorder éventuellement la lecture des contacts dans les réglages.
+5. Sur le CUBOT P60, dans **Paramètres → DuraSpeed**, autoriser **prefix blocker** en arrière-plan. Vérifier séparément les restrictions de batterie Android ; ces deux réglages sont distincts.
 
 ## Blocage réel
 

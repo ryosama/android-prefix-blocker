@@ -78,6 +78,14 @@ L’[autorisation de lecture du journal](https://developer.android.com/reference
 
 Un appel observé puis autorisé par le filtre n’est pas nécessairement un appel décroché : l’historique local affiche **Autorisé par le filtre**. Lorsque le journal système est accessible, il fournit les états reçus/manqués/rejetés/bloqués. La règle de blocage est affichée quand une décision locale correspondante est disponible ; un ancien appel bloqué par le téléphone n’est pas attribué à une règle actuelle.
 
+### CUBOT / MediaTek : vérifier DuraSpeed
+
+Sur les appareils équipés de DuraSpeed, dont le CUBOT P60 sous Android 12, ouvrir **Paramètres → DuraSpeed** et activer l’interrupteur de **prefix blocker** dans la liste des applications autorisées en arrière-plan. Cette exception est distincte du réglage de batterie Android : autoriser l’utilisation de batterie sans restriction ne suffit pas à configurer DuraSpeed.
+
+Lors du diagnostic sur le téléphone de test, Android a laissé passer un appel après expiration du délai de filtrage, sans connexion au service de l’application. Le service répondait normalement lors des essais suivants, y compris après arrêt de son processus. DuraSpeed était activé et l’exception de prefix blocker était désactivée ; elle a été ajoutée. Ce constat justifie de vérifier ce réglage, sans attribuer tous les délais de filtrage à DuraSpeed.
+
+Pour tester un rejet réel, utiliser un numéro absent des contacts et des exceptions, avec une règle correspondant à ce numéro. Un contact doit continuer à sonner, même s’il correspond à une règle de blocage.
+
 ## Confidentialité
 
 - Aucune permission Internet, aucun serveur, compte, publicité, outil d’analyse ou télémétrie.
