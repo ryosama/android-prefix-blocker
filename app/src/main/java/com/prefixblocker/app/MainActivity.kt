@@ -51,9 +51,12 @@ import java.util.concurrent.Executors
 
 class MainActivity : Activity() {
     private val store by lazy { AppStore.get(this) }
+    // Lectures et écritures sont sérialisées hors du fil qui dessine l'interface.
     private val worker = Executors.newSingleThreadExecutor()
     private val main = Handler(Looper.getMainLooper())
     private var tab = 0
+    // Chaque chargement reçoit un numéro : un résultat ancien ne peut pas
+    // remplacer les données d'une actualisation demandée plus récemment.
     private var generation = 0
     private var alive = true
     private var observing = false

@@ -13,6 +13,8 @@ object PhoneNumbers {
     }
 
     fun parseRule(input: String, allowPrefix: Boolean = true): String {
+        // Le joker est retiré avant de normaliser le numéro, puis remis à la fin.
+        // Cela rend aussi identiques les saisies 0948*, +33948* et 0033948*.
         val compact = compact(input)
         val prefix = compact.endsWith('*')
         require(allowPrefix || !prefix) { "exact_only" }
@@ -22,6 +24,7 @@ object PhoneNumbers {
         val digits = normalized.drop(1)
         require(digits.length <= 15 && digits.isNotEmpty()) { "invalid_length" }
         if (!prefix) {
+            // Une saisie courte sans joker ne doit pas devenir un préfixe par erreur.
             require(digits.length in 7..15) { "invalid_length" }
             if (digits.startsWith("33")) require(digits.length == 11) { "french_length" }
         }
@@ -37,6 +40,7 @@ object PhoneNumbers {
         }
         require(international.length > 1 && international.drop(1).all { it in '0'..'9' }) { "invalid_number" }
         require(international[1] != '0') { "invalid_country" }
+        // En France, l'indicatif +33 remplace le zéro national, il ne le précède pas.
         require(!international.startsWith("+330")) { "french_trunk" }
         return international
     }

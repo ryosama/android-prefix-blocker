@@ -12,6 +12,7 @@ data class Rule(val id: Long, val canonical: String, val allowed: Boolean)
 data class ScreeningEvent(val id: Long, val number: String, val time: Long, val decision: Decision)
 
 class AppStore(context: Context) : SQLiteOpenHelper(context.applicationContext, "prefix_blocker.db", null, 1) {
+    // L'interrupteur est indépendant des règles : une pause ne les efface jamais.
     private val preferences = context.applicationContext.getSharedPreferences("settings", Context.MODE_PRIVATE)
 
     var enabled: Boolean
@@ -19,6 +20,8 @@ class AppStore(context: Context) : SQLiteOpenHelper(context.applicationContext, 
         set(value) { preferences.edit().putBoolean("enabled", value).apply() }
 
     override fun onCreate(db: SQLiteDatabase) {
+        // L'unicité porte sur le numéro normalisé ET la liste : une exception
+        // peut autoriser un numéro également présent dans la liste de blocage.
         db.execSQL("CREATE TABLE rules (_id INTEGER PRIMARY KEY AUTOINCREMENT, canonical TEXT NOT NULL, allowed INTEGER NOT NULL DEFAULT 0, UNIQUE(canonical, allowed))")
         db.execSQL("CREATE TABLE events (_id INTEGER PRIMARY KEY AUTOINCREMENT, number TEXT NOT NULL, time INTEGER NOT NULL, reason TEXT NOT NULL, rule TEXT)")
         DEFAULT_RULES.forEach { raw ->
@@ -29,6 +32,8 @@ class AppStore(context: Context) : SQLiteOpenHelper(context.applicationContext, 
         }
     }
 
+    // Premier schéma uniquement. Une future version devra conserver les données
+    // avec une migration explicite plutôt que recréer les tables.
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) = Unit
 
     fun rules(allowed: Boolean): List<Rule> = readableDatabase.query(
@@ -82,7 +87,10 @@ class AppStore(context: Context) : SQLiteOpenHelper(context.applicationContext, 
     fun clearEvents() { writableDatabase.delete("events", null, null) }
 
     companion object {
+        // Amorçage à la création de la base seulement ; ne pas rétablir une
+        // règle que l'utilisateur aurait supprimée lors d'un lancement suivant.
         val DEFAULT_RULES = listOf("0948*", "0270*", "0424*", "0162*", "0377*")
+        // Une seule connexion logique partagée entre l'interface et le service.
         @Volatile private var instance: AppStore? = null
         fun get(context: Context): AppStore = instance ?: synchronized(this) {
             instance ?: AppStore(context).also { instance = it }

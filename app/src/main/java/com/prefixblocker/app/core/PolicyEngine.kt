@@ -1,5 +1,7 @@
 package com.prefixblocker.app.core
 
+// Seul BLOCKED entraîne un rejet. Une erreur, un délai dépassé ou un numéro
+// inexploitable doivent laisser passer l'appel et rester explicables dans le journal.
 enum class Reason { BLOCKED, NO_MATCH, CONTACT, EXCEPTION, PAUSED, UNKNOWN, ERROR, TIMEOUT }
 
 data class Decision(val reason: Reason, val rule: String? = null) {
